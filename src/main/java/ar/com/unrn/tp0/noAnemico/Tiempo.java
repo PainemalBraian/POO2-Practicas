@@ -1,8 +1,9 @@
+package src.main.java.ar.com.unrn.tp0.noAnemico;
 import java.time.*;
-public class tiempo {
+public class Tiempo {
     private LocalDate fecha;
 
-    public tiempo(){
+    public Tiempo(){
         this.fecha = LocalDate.now();
     }
     public String obtenerFechaLarga() {
