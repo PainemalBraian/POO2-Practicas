@@ -1,5 +1,7 @@
-package src.main.java.ar.com.unrn.tp0.noAnemico;
+package main.java.ar.com.unrn.tp0.noAnemico;
+import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.*;
 public class Tiempo {
     private LocalDate fecha;
 
