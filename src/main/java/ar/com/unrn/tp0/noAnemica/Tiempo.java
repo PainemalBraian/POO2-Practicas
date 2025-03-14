@@ -1,5 +1,7 @@
-package main.java.ar.com.unrn.tp0.anemica;
+package main.java.ar.com.unrn.tp0.noAnemica;
+
 import java.time.*;
+
 public class Tiempo {
     private LocalDate fecha;
 
@@ -10,4 +12,10 @@ public class Tiempo {
     public LocalDate getFecha() {
         return fecha;
     }
+
+    /*
+    .
+    .
+    .
+    */
 }
