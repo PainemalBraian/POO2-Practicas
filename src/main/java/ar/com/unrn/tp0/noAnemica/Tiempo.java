@@ -8,14 +8,7 @@ public class Tiempo {
     public Tiempo(){
         this.fecha = LocalDate.now();
     }
-
     public LocalDate getFecha() {
         return fecha;
     }
-
-    /*
-    .
-    .
-    .
-    */
 }
