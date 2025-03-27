@@ -1,4 +1,4 @@
-package main.java.ar.com.unrn.tp0.noAnemica;
+package tp0.noAnemica;
 
 import java.time.format.*;
 

@@ -1,4 +1,4 @@
-package main.java.ar.com.unrn.tp0.anemico;
+package tp0.anemico;
 
 public class Main {
     public static void main(String[] args) {
