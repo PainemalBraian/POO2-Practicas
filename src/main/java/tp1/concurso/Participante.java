@@ -21,10 +21,10 @@ public class Participante {
         return puntos;
     }
 
-    public String obtenerPuntos() {
-        String stringPuntos= String.valueOf(this.puntos);
-        return stringPuntos;
-    }
+//    public String obtenerPuntos() {
+//        String stringPuntos= String.valueOf(this.puntos);
+//        return stringPuntos;
+//    }
 
     @Override
     public boolean equals(Object obj) {
@@ -36,9 +36,9 @@ public class Participante {
         return dni == that.dni;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(dni);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(dni);
+//    }
 
 }
