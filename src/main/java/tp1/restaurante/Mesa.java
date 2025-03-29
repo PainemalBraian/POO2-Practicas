@@ -3,34 +3,110 @@ package tp1.restaurante;
 import java.util.ArrayList;
 
 public class Mesa {
-    static String CAPACIDAD_COMENSALES_COMPLETA="Capacidad de comensales completa";
-    static int idMesa=0;
+    static String CAPACIDAD_COMENSALES_COMPLETA = "Capacidad de comensales completa";
+    static int idMesa = 0;
     private int id;
     private int capacidad;
+    private boolean confirmarPedido = false;
     private ArrayList<Producto> menu;
     private ArrayList<Comensal> comensales;
     private ArrayList<Producto> pedido;
+    private ArrayList<Integer> cantidades;
+
+    public Mesa(int capacidad) {
+        this.id = idMesa++;
+        this.capacidad = capacidad;
+        this.menu = new ArrayList<>();
+        this.comensales = new ArrayList<>();
+        this.pedido = new ArrayList<>();
+        this.cantidades = new ArrayList<>();
+    }
+
 
     public void sentarComensal(Comensal comensal) {
-        if (estaDentroCapacidad())
-            this.comensales.add(comensal);
+        if (estaDentroCapacidad()) this.comensales.add(comensal);
         else throw new RuntimeException(CAPACIDAD_COMENSALES_COMPLETA);
     }
 
-    private boolean estaDentroCapacidad(){
+    private boolean estaDentroCapacidad() {
         return comensales.size() <= capacidad;
     }
 
-    public void addProducto(Producto producto){
+    public boolean seConfirmoPedido() {
+        return confirmarPedido;
+    }
+
+    public void addProducto(Producto producto) {
         this.menu.add(producto);
     }
 
-    public void realizarPedido(Producto producto, int cantidad){
-        if ( producto.disminuirStock(cantidad) )
-            for(int i=0;i<=cantidad;i++){
-                pedido.add(producto);}
+    public void addPedido(Producto producto, int cantidad) {
+        if (producto.disminuirStock(cantidad)) for (int i = 0; i <= cantidad; i++) {
+            pedido.add(producto);
+            cantidades.add(cantidad);
+        }
     }
 
+    public String mostrarMenu() {
+        StringBuffer menuDisponible = new StringBuffer();
+        for (int i = 0; i < menu.size(); i++) {
+            menuDisponible.append("\n" + "\n" + menu.get(i).verProducto());
+        }
+        return menuDisponible.toString();
+    }
+
+    public void realizarPedido() {
+        if (pedido.size() != cantidades.size()) {
+            throw new RuntimeException("El número de productos no coincide con las cantidades.");
+        }
+        confirmarPedido = true;
+    }
+
+    public void pagarPedido(TarjetaCredito tarjeta, int porcentajePropina) {
+        if (!confirmarPedido) {
+            throw new RuntimeException("El pedido debe ser confirmado antes de realizar el pago.");
+        }
+
+        double totalBebidas = 0;
+        double totalPlatos = 0;
+
+        for (int i = 0; i < pedido.size(); i++) {
+            Producto producto = pedido.get(i);
+            if (producto.esTipo("BEBIDA")) {
+                totalBebidas += producto.getCosto() * cantidades.get(i);
+            } else if (producto.esTipo("PLATO")) {
+                totalPlatos += producto.getCosto() * cantidades.get(i);
+            }
+        }
+
+        double descuento = 0;
+
+        if (tarjeta.esTipo("Visa")) {
+            descuento = totalBebidas * 0.03; // 3% descuento en bebidas
+        } else if (tarjeta.esTipo("Mastercard")) {
+            descuento = totalPlatos * 0.02; // 2% descuento en platos
+        } else if (tarjeta.esTipo("Comarca Plus")) {
+            descuento = (totalBebidas + totalPlatos) * 0.02; // 2% descuento total
+        }
+
+        double totalConDescuento = (totalBebidas + totalPlatos) - descuento;
+        double propina = totalConDescuento * (porcentajePropina / 100.0);
+
+        double totalFinal = totalConDescuento + propina;
+
+        String detallePago = generarDetallePago(id, totalBebidas, totalPlatos, descuento, porcentajePropina, propina, totalFinal);
+        System.out.println(detallePago);
+
+    }
+
+    private String generarDetallePago(int id, double totalBebidas, double totalPlatos, double descuento, int porcentajePropina, double propina, double totalFinal) {
+        String detalle = "Pago realizado para la mesa " + id + "\n" +
+                "Total antes del descuento: $" + String.format("%.2f", totalBebidas + totalPlatos) + "\n" +
+                "Descuento aplicado: $" + String.format("%.2f", descuento) + "\n" +
+                "Propina (" + porcentajePropina + "%): $" + String.format("%.2f", propina) + "\n" +
+                "Total final: $" + String.format("%.2f", totalFinal);
+        return detalle;
+    }
 
 }
 
@@ -51,12 +127,3 @@ public class Mesa {
 //    Cualquier otro tipo de tarjeta no posee descuento.
 
 //    Además del costo de la comida, es obligatorio dejar propina, que puede ser: 2%, 3% o 5% del costo total.
-
-
-//    Luego de implementar escriba los siguientes casos de test:
-//    1.Cálculo de costo con tarjeta Visa.
-//    2. Cálculo de costo con tarjeta Mastercard.
-//    3. Cálculo de costo con tarjeta Comarca Plus.
-//    4. Cálculo de costo con tarjeta Viedma.
-//    Lograr alta cobertura (mayor a 90%).
-//    Verifique si quedan funcionalidades sin testear.
