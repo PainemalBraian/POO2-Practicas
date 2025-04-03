@@ -33,7 +33,7 @@ public class Producto {
     }
 
     public boolean esTipo(String tipo) {
-        return (this.tipo.name()==tipo);
+        return (this.tipo.name().equals(tipo));
     }
 
 

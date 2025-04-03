@@ -8,17 +8,17 @@ public class RestauranteTest {
     @Test
     public void calcularCostoConTarjetaVisa() {
         // Configuración
+        Comensal cliente = new Comensal(11111111,"Juan Pérez");
         TarjetaCredito tarjetaVisa = new TarjetaCredito("Juan Pérez", "1234567890123456", "12/25", "Visa", 123);
         Mesa mesa = new Mesa(4);
         Producto bebida = new Producto(Producto.TipoProducto.BEBIDA, "Coca Cola", "Bebida gaseosa", 100.0, 10);
         mesa.addProducto(bebida);
         mesa.addPedido(bebida, 2); // Pedido de 2 bebidas
         mesa.realizarPedido();
+        mesa.pagarPedido(tarjetaVisa,3);
 
         // Verificar el pago con descuento del 3% en bebidas
-        mesa.pagarPedido(tarjetaVisa, 3); // Propina del 3%
-        assertTrue(mesa.seConfirmoPedido());
-        // Falta adaptar para comparar con costos (+metodos en mesa para obtener total con o sin descuento)
+        assertEquals(199.82, mesa.obtenerTotalConDescuento(tarjetaVisa, 3));// Propina del 3%
     }
 
     @Test
@@ -30,10 +30,11 @@ public class RestauranteTest {
         mesa.addProducto(plato);
         mesa.addPedido(plato, 1); // Pedido de 1 plato
         mesa.realizarPedido();
+        mesa.pagarPedido(tarjetaMastercard,5);
 
         // Verificar el pago con descuento del 2% en platos
         mesa.pagarPedido(tarjetaMastercard, 5); // Propina del 5%
-        assertTrue(mesa.seConfirmoPedido());
+        assertEquals(308.7, mesa.obtenerTotalConDescuento(tarjetaMastercard, 5));
     }
 
     @Test
@@ -48,10 +49,12 @@ public class RestauranteTest {
         mesa.addPedido(bebida, 1); // Pedido de 1 bebida
         mesa.addPedido(plato, 1); // Pedido de 1 plato
         mesa.realizarPedido();
+        mesa.pagarPedido(tarjetaComarcaPlus,2);
 
         // Verificar el pago con descuento del 2% total
         mesa.pagarPedido(tarjetaComarcaPlus, 2); // Propina del 2%
-        assertTrue(mesa.seConfirmoPedido());
+        assertEquals(249.9, mesa.obtenerTotalConDescuento(tarjetaComarcaPlus, 2));
+        //assertTrue(mesa.seConfirmoPedido());
     }
 
     @Test
@@ -63,10 +66,13 @@ public class RestauranteTest {
         mesa.addProducto(bebida);
         mesa.addPedido(bebida, 1); // Pedido de 1 bebida
         mesa.realizarPedido();
+        mesa.pagarPedido(tarjetaViedma,5);
 
         // Verificar que no aplica descuento
         mesa.pagarPedido(tarjetaViedma, 5); // Propina del 5%
+        assertEquals(125.0, mesa.obtenerTotalConDescuento(tarjetaViedma, 5));
         assertTrue(mesa.seConfirmoPedido());
+
     }
 }
 
