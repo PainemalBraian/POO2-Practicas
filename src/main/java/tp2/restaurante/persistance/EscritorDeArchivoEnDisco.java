@@ -1,13 +1,15 @@
-package tp2.restaurante;
+package tp2.restaurante.persistance;
+
+import tp2.restaurante.EscritorArchivo;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class EscritorArchivoTxt implements EscritorArchivo {
+public class EscritorDeArchivoEnDisco implements EscritorArchivo {
     private String rutaArchivo;
 
-    public EscritorArchivoTxt(String rutaArchivo) {
+    public EscritorDeArchivoEnDisco(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
 

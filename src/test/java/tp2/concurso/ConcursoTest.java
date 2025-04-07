@@ -1,6 +1,7 @@
 package tp2.concurso;
 
 import org.junit.jupiter.api.Test;
+import tp2.concurso.persistance.EscritorDeArchivoEnDisco;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,27 +17,28 @@ public class ConcursoTest {
     @Test
     public void inscribirParticipanteDentroDelPlazo() throws IOException {
         // Crear archivo para pruebas
-        Path directorio = Paths.get(DIRECTORIO);
+        var directorio = Paths.get(DIRECTORIO);
         Files.deleteIfExists(directorio); // Limpieza del archivo
 
-        // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoDocumento(directorio.toString());
-
         // Configuración del concurso
-        LocalDate fechaApertura = LocalDate.now().minusDays(2);
-        LocalDate fechaLimite = fechaApertura.plusDays(10);
-        Concurso concurso = new Concurso(fechaApertura, fechaLimite, escritorArchivo);
+        var fechaApertura = LocalDate.now().minusDays(2);
+        var fechaLimite = fechaApertura.plusDays(10);
+    //    Concurso concurso = new Concurso(fechaApertura, fechaLimite, new EscritorDeArchivoEnDisco(directorio.toString())); // Test En Disco
+        var fakeInscripcion =  new FakeEscritorDeArchivo();
+        var concurso = new Concurso(fechaApertura, fechaLimite,fakeInscripcion);  // Test En Memoria
 
         // Participante
-        Participante participante = new Participante(12345, "Juan Perez");
-        Participante participante2 = new Participante(54321, "Martín Ramos");
+        var participante = new Participante(12345, "Juan Perez");
+        var participante2 = new Participante(54321, "Martín Ramos");
 
         // Inscripción
         concurso.inscribirParticipante(participante);
         concurso.inscribirParticipante(participante2);
 
         // Verificar inscripción
-        assertTrue(concurso.existParticipante(participante));
+    //    assertTrue(concurso.existParticipante(participante));
+        assertTrue(fakeInscripcion.startWith("Fecha"));
+
     }
 
     @Test
@@ -44,7 +46,7 @@ public class ConcursoTest {
         // Uso del archivo para pruebas
         Path directorio = Paths.get(DIRECTORIO);
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoDocumento(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración del concurso
         LocalDate fechaApertura = LocalDate.now();
@@ -67,7 +69,7 @@ public class ConcursoTest {
         // Uso del archivo para pruebas
         Path directorio = Paths.get(DIRECTORIO);
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoDocumento(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración del concurso
         LocalDate fechaApertura = LocalDate.now().minusDays(20); // Fecha pasada

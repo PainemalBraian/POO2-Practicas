@@ -1,6 +1,8 @@
 package tp2.restaurante;
 
 import org.junit.jupiter.api.Test;
+import tp2.restaurante.persistance.EscritorDeArchivoEnDisco;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,7 +25,7 @@ public class RestauranteTest {
         Files.deleteIfExists(directorio); // Limpieza del archivo
 
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoTxt(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración
         Comensal cliente = new Comensal(11111111, "Juan Pérez");
@@ -53,7 +55,7 @@ public class RestauranteTest {
         Files.deleteIfExists(directorio); // Limpieza del archivo
 
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoTxt(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración
         TarjetaCredito tarjetaMastercard = new TarjetaCredito("María López", "9876543210987654", "06/27", "Mastercard", 456);
@@ -82,7 +84,7 @@ public class RestauranteTest {
         Files.deleteIfExists(directorio); // Limpieza del archivo
 
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoTxt(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración
         TarjetaCredito tarjetaComarcaPlus = new TarjetaCredito("Ana Gómez", "1111222233334444", "03/28", "Comarca Plus", 789);
@@ -115,7 +117,7 @@ public class RestauranteTest {
         Files.deleteIfExists(directorio); // Limpieza del archivo
 
         // Configurar el escritor de archivo con la ruta
-        EscritorArchivo escritorArchivo = new EscritorArchivoTxt(directorio.toString());
+        EscritorArchivo escritorArchivo = new EscritorDeArchivoEnDisco(directorio.toString());
 
         // Configuración
         TarjetaCredito tarjetaViedma = new TarjetaCredito("Carlos Díaz", "5555666677778888", "07/30", "Viedma", 321);

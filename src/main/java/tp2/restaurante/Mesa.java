@@ -1,5 +1,7 @@
 package tp2.restaurante;
 
+import tp2.restaurante.persistance.EscritorDeArchivoEnDisco;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class Mesa {
         this.comensales = new ArrayList<>();
         this.pedido = new ArrayList<>();
         this.cantidades = new ArrayList<>();
-        this.escritorArchivo = new EscritorArchivoTxt("");
+        this.escritorArchivo = new EscritorDeArchivoEnDisco("");
     }
 
     public void setEscritorArchivo(EscritorArchivo escritorArchivo) {
