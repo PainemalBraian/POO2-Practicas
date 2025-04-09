@@ -3,11 +3,18 @@ package tp2.concurso;
 public class Participante {
     private int dni;
     private String name;
+    private String email;
     private int puntos;
 
     public Participante(int dni, String name) {
         this.dni = dni;
         this.name = name;
+        this.puntos = 0;
+    }
+    public Participante(int dni, String name, String email) {
+        this.dni = dni;
+        this.name = name;
+        this.email = email;
         this.puntos = 0;
     }
 
@@ -17,6 +24,14 @@ public class Participante {
 
     public int getPuntos() {
         return puntos;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

@@ -16,19 +16,18 @@ public class AlmacenamientoBaseDatosConcurso extends DbController implements Alm
             // Dividir el contenido en base al formato proporcionado
             String[] datos = contenido.split("\n");
             String fechaInscripcion = datos[0].split(":")[1].trim();                // "Fecha de Inscripción: dd/MM/yyyy"
-            int idInscripcion = Integer.parseInt(datos[1].split(":")[1].trim());    // "ID Inscripción: ID"
-            int idConcurso = Integer.parseInt(datos[2].split(":")[1].trim());       // "ID Concurso: ID"
-            String fechaLimite = datos[3].split(":")[1].trim();                     // "Fecha Límite: dd/MM/yyyy"
-            String fechaApertura = datos[4].split(":")[1].trim();                   // "Fecha Apertura: dd/MM/yyyy"
+            //int idInscripcion = Integer.parseInt(datos[1].split(":")[1].trim());    // "ID Inscripción: ID"
+            int idConcurso = Integer.parseInt(datos[1].split(":")[1].trim());       // "ID Concurso: ID"
+            String fechaLimite = datos[2].split(":")[1].trim();                     // "Fecha Límite: dd/MM/yyyy"
+            String fechaApertura = datos[3].split(":")[1].trim();                   // "Fecha Apertura: dd/MM/yyyy"
 
             // Query para insertar los datos
-            String sql = "INSERT INTO inscripciones (id_inscripcion, fecha_inscripcion, id_concurso, fecha_limite, fecha_apertura) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO inscripciones (fecha_inscripcion, id_concurso, fecha_limite, fecha_apertura) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, idInscripcion);
-                stmt.setDate(2, java.sql.Date.valueOf(LocalDate.parse(fechaInscripcion, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-                stmt.setInt(3, idConcurso);
-                stmt.setDate(4, java.sql.Date.valueOf(LocalDate.parse(fechaLimite, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-                stmt.setDate(5, java.sql.Date.valueOf(LocalDate.parse(fechaApertura, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                stmt.setDate(1, java.sql.Date.valueOf(LocalDate.parse(fechaInscripcion, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                stmt.setInt(2, idConcurso);
+                stmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse(fechaLimite, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                stmt.setDate(4, java.sql.Date.valueOf(LocalDate.parse(fechaApertura, DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
 
                 stmt.executeUpdate();
             }
@@ -40,15 +39,15 @@ public class AlmacenamientoBaseDatosConcurso extends DbController implements Alm
 }
 
 //CREATE DATABASE IF NOT EXISTS poo2_db;
-
+//
 //CREATE TABLE inscripciones (
-//        id_inscripcion INT PRIMARY KEY, -- ID único de la inscripción
+//				  id_inscripcion INT AUTO_INCREMENT PRIMARY KEY , -- ID único de la inscripción
 //                fecha_inscripcion DATE NOT NULL, -- Fecha de inscripción
 //                id_concurso INT NOT NULL, -- ID del concurso
 //                fecha_limite DATE NOT NULL, -- Fecha límite del concurso
 //                fecha_apertura DATE NOT NULL -- Fecha de apertura del concurso
 //);
-
+//
 //SELECT * FROM inscripciones;
-
+//
 //TRUNCATE TABLE inscripciones;

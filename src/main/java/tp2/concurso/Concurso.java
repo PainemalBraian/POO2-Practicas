@@ -1,5 +1,7 @@
 package tp2.concurso;
 
+import tp2.concurso.persistance.EmailService;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class Concurso {
 
     private EscritorArchivo escritorArchivo; //Inyección de dependencia
     private Almacenamiento almacenamiento;
+    private EmailService emailService;
 
     public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, EscritorArchivo escritorArchivo) {
         this.id = idConcurso++;
@@ -22,12 +25,13 @@ public class Concurso {
         this.inscriptos=new ArrayList<>();
         this.escritorArchivo = escritorArchivo; //Inyección de dependencia
     }
-    public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, Almacenamiento almacenamiento) {
+    public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, Almacenamiento almacenamiento,EmailService emailService) {
         this.id = idConcurso++;
         this.fechaApertura = fechaApertura;
         this.fechaLimite = fechaLimite;
         this.inscriptos=new ArrayList<>();
-        this.almacenamiento = almacenamiento; //Inyección de dependencia
+        this.almacenamiento = almacenamiento;
+        this.emailService = emailService;
     }
 
     public void inscribirParticipante(Participante p){
@@ -35,6 +39,14 @@ public class Concurso {
             Inscripcion nuevaInscripcion = new Inscripcion(p,this);
             agregarInscripcion(nuevaInscripcion);
             guardarEnArchivo(nuevaInscripcion); // Uso de la abstracción para guardar en archivo
+
+            // Enviar correo al participante
+            String asunto = "Inscripción confirmada";
+            String mensaje = "Hola " + p.getName() + ",\n\n" +
+                    "Te confirmamos que te has inscrito con éxito al concurso ID: " + this.id + ".\n" +
+                    "¡Buena suerte!\n\n" +
+                    "Saludos,\nEquipo del Concurso";
+            emailService.enviarEmail(p.getEmail(), asunto, mensaje);
             if (esFechaDeApertura())
                 p.addPuntos(10);
         }else {
@@ -47,7 +59,7 @@ public class Concurso {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatoFecha);
         String fechaInscripcion = inscripcion.getFechaInscripcion().format(formatter);
         String linea = "Fecha de Inscripción: " + fechaInscripcion +
-                "\nID Inscripción: " + inscripcion.getIdInscripcion() +
+                //"\nID Inscripción: " + inscripcion.getIdInscripcion() +
                 "\nID Concurso: " + this.id+
                 "\nFecha Límite: " + fechaLimite.format(formatter) +
                 "\nFecha Apertura: "+fechaApertura.format(formatter)+"\n";
