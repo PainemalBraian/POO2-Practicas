@@ -18,7 +18,7 @@ public class DbController {
 			prop.setProperty("username", infoDataBase.getString("db.user"));
 			prop.setProperty("password", infoDataBase.getString("db.password"));
 		} catch (Exception e1) {
-			throw new RuntimeException("Ocurrio un error al leer la configuracion desde el archivo");
+			throw new RuntimeException("Ocurrio un error al leer la configuracion desde el archivo "+ e1.getMessage());
 		}
 		return prop;
 	}
@@ -32,7 +32,7 @@ public class DbController {
             conn.setAutoCommit(true);
             return conn;
         } catch (SQLException e) {
-            throw new SQLException("Error al conectar con base de datos");
+            throw new SQLException("Error al conectar con base de datos: "+ e.getMessage());
         }
     }
     

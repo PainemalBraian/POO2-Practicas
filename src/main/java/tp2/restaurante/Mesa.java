@@ -76,7 +76,8 @@ public class Mesa {
             throw new RuntimeException("El pedido debe ser confirmado antes de realizar el pago.");
         }
         String detallePago = generarDetallePago(tarjeta, porcentajePropina);
-        escritorArchivo.guardarDetalle(detallePago);
+        //escritorArchivo.guardarDetalle(detallePago);  // Escribir en disco
+        almacenamientoBD.guardarDetalle(detallePago); // Escribir en BD
     }
 
     public double obtenerTotalConDescuento(TarjetaCredito tarjeta, int porcentajePropina) {
@@ -129,7 +130,7 @@ public class Mesa {
     public String generarDetallePago(TarjetaCredito tarjeta, int porcentajePropina) {
         String formatoFecha = "dd/MM/yyyy";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatoFecha);
-        String detalle = "Pago realizado para la mesa " + id + "\n" +
+        String detalle = "Pago realizado para la mesa: " + id + "\n" +
                 "Fecha de Pago: " + LocalDate.now().format(formatter) + "\n" +
                 "Total antes del descuento: $" + String.format("%.2f", obtenerTotalBedidas() + obtenerTotalPlatos()) + "\n" +
                 "Descuento aplicado: $" + String.format("%.2f", obtenerDescuento(tarjeta)) + "\n" +

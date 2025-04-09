@@ -39,6 +39,8 @@ public class AlmacenamientoBaseDatosConcurso extends DbController implements Alm
 
 }
 
+//CREATE DATABASE IF NOT EXISTS poo2_db;
+
 //CREATE TABLE inscripciones (
 //        id_inscripcion INT PRIMARY KEY, -- ID único de la inscripción
 //                fecha_inscripcion DATE NOT NULL, -- Fecha de inscripción
@@ -48,3 +50,5 @@ public class AlmacenamientoBaseDatosConcurso extends DbController implements Alm
 //);
 
 //SELECT * FROM inscripciones;
+
+//TRUNCATE TABLE inscripciones;

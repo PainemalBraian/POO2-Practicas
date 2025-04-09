@@ -17,10 +17,11 @@ public class AlmacenamientoBaseDatosRestaurante extends DbController implements 
             String[] datos = contenido.split("\n");
             int idMesa = Integer.parseInt(datos[0].split(":")[1].trim().replace("Pago realizado para la mesa ", ""));
             String fechaPago = datos[1].split(":")[1].trim();                                   // "Fecha de Pago: dd/MM/yyyy"
-            double totalAntesDescuento = Double.parseDouble(datos[2].split("\\$")[1].trim());   // "Total antes del descuento: $X.XX"
-            double descuentoAplicado = Double.parseDouble(datos[3].split("\\$")[1].trim());     // "Descuento aplicado: $X.XX"
-            double propina = Double.parseDouble(datos[4].split("\\$")[1].trim());               // "Propina (X%): $X.XX"
-            double totalFinal = Double.parseDouble(datos[5].split("\\$")[1].trim());            // "Total final: $X.XX"
+            double totalAntesDescuento = Double.parseDouble(datos[2].split("\\$")[1].trim().replace(",", "."));
+            // "Total antes del descuento: $X.XX"
+            double descuentoAplicado = Double.parseDouble(datos[3].split("\\$")[1].trim().replace(",", "."));     // "Descuento aplicado: $X.XX"
+            double propina = Double.parseDouble(datos[4].split("\\$")[1].trim().replace(",", "."));               // "Propina (X%): $X.XX"
+            double totalFinal = Double.parseDouble(datos[5].split("\\$")[1].trim().replace(",", "."));            // "Total final: $X.XX"
 
             // Query para insertar los datos
             String sql = "INSERT INTO pagos (id_mesa, fecha_pago, total_antes_descuento, descuento_aplicado, propina, total_final) " +
@@ -41,6 +42,7 @@ public class AlmacenamientoBaseDatosRestaurante extends DbController implements 
     }
 }
 
+//CREATE DATABASE IF NOT EXISTS poo2_db;
 
 //CREATE TABLE pagos (
 //        id_pago INT AUTO_INCREMENT PRIMARY KEY, -- ID único del pago
@@ -53,3 +55,5 @@ public class AlmacenamientoBaseDatosRestaurante extends DbController implements 
 //);
 
 //SELECT * FROM pagos;
+
+//TRUNCATE TABLE pagos;

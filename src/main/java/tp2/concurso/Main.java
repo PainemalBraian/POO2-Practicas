@@ -17,6 +17,6 @@ public class Main {
         Participante participante = new Participante(12345, "Juan Perez");
         var participante2 = new Participante(54321, "Martín Ramos");
         concurso.inscribirParticipante(participante);
-        concurso.inscribirParticipante(participante2);
+        //concurso.inscribirParticipante(participante2);
     }
 }

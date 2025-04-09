@@ -52,7 +52,8 @@ public class Concurso {
                 "\nFecha Límite: " + fechaLimite.format(formatter) +
                 "\nFecha Apertura: "+fechaApertura.format(formatter)+"\n";
 
-        escritorArchivo.guardarInscripcion(linea);
+        //escritorArchivo.guardarInscripcion(linea); //Escribir en Disco
+        almacenamiento.guardarInscripcion(linea); //Escribir en BD
     }
 
     void agregarInscripcion(Inscripcion i) {

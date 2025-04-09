@@ -13,10 +13,10 @@ public class Main {
         Producto bebida = new Producto(Producto.TipoProducto.BEBIDA, "Coca Cola", "Bebida gaseosa", 100.0, 10);
         mesa.addProducto(bebida);
         mesa.addPedido(bebida, 2); // Pedido de 2 bebidas
+        mesa.setAlmacenamientoBD(almacenamientoBaseDatos); //Setear enlace a la bd
 
         // Registrar pedido
         mesa.confirmarPedido();
         mesa.pagarPedido(tarjetaVisa,3);
-        almacenamientoBaseDatos.guardarDetalle(mesa.generarDetallePago(tarjetaVisa,3));
     }
 }
