@@ -13,6 +13,7 @@ public class Concurso {
     private ArrayList<Inscripcion> inscriptos;
 
     private EscritorArchivo escritorArchivo; //Inyección de dependencia
+    private Almacenamiento almacenamiento;
 
     public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, EscritorArchivo escritorArchivo) {
         this.id = idConcurso++;
@@ -20,6 +21,13 @@ public class Concurso {
         this.fechaLimite = fechaLimite;
         this.inscriptos=new ArrayList<>();
         this.escritorArchivo = escritorArchivo; //Inyección de dependencia
+    }
+    public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, Almacenamiento almacenamiento) {
+        this.id = idConcurso++;
+        this.fechaApertura = fechaApertura;
+        this.fechaLimite = fechaLimite;
+        this.inscriptos=new ArrayList<>();
+        this.almacenamiento = almacenamiento; //Inyección de dependencia
     }
 
     public void inscribirParticipante(Participante p){

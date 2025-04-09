@@ -1,7 +1,5 @@
 package tp2.restaurante;
 
-import tp2.restaurante.persistance.EscritorDeArchivoEnDisco;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,7 +14,9 @@ public class Mesa {
     private ArrayList<Comensal> comensales;
     private ArrayList<Producto> pedido;
     private ArrayList<Integer> cantidades;
+
     private EscritorArchivo escritorArchivo;
+    private Almacenamiento almacenamientoBD;
 
     public Mesa(int capacidad) {
         this.id = idMesa++;
@@ -25,8 +25,10 @@ public class Mesa {
         this.comensales = new ArrayList<>();
         this.pedido = new ArrayList<>();
         this.cantidades = new ArrayList<>();
-        this.escritorArchivo = new EscritorDeArchivoEnDisco("");
+        //this.escritorArchivo = new EscritorDeArchivoEnDisco("");
     }
+
+    public void setAlmacenamientoBD(Almacenamiento almacenamientoBD) {this.almacenamientoBD = almacenamientoBD;}
 
     public void setEscritorArchivo(EscritorArchivo escritorArchivo) {
         this.escritorArchivo = escritorArchivo;
@@ -62,7 +64,7 @@ public class Mesa {
 //        return menuDisponible.toString();
 //    }
 
-    public void realizarPedido() {
+    public void confirmarPedido() {
         if (pedido.size() != cantidades.size()) {
             throw new RuntimeException("El número de productos no coincide con las cantidades.");
         }
@@ -73,8 +75,7 @@ public class Mesa {
         if (!confirmarPedido) {
             throw new RuntimeException("El pedido debe ser confirmado antes de realizar el pago.");
         }
-        double totalFinal = obtenerTotalConDescuento(tarjeta, porcentajePropina);
-        String detallePago = generarDetallePago(id, obtenerTotalBedidas(), obtenerTotalPlatos(), obtenerDescuento(tarjeta), porcentajePropina, obtenerPropina(tarjeta, porcentajePropina), totalFinal);
+        String detallePago = generarDetallePago(tarjeta, porcentajePropina);
         escritorArchivo.guardarDetalle(detallePago);
     }
 
@@ -125,15 +126,15 @@ public class Mesa {
         return totalPlatos;
     }
 
-    public String generarDetallePago(int id, double totalBebidas, double totalPlatos, double descuento, int porcentajePropina, double propina, double totalFinal) {
+    public String generarDetallePago(TarjetaCredito tarjeta, int porcentajePropina) {
         String formatoFecha = "dd/MM/yyyy";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatoFecha);
         String detalle = "Pago realizado para la mesa " + id + "\n" +
                 "Fecha de Pago: " + LocalDate.now().format(formatter) + "\n" +
-                "Total antes del descuento: $" + String.format("%.2f", totalBebidas + totalPlatos) + "\n" +
-                "Descuento aplicado: $" + String.format("%.2f", descuento) + "\n" +
-                "Propina (" + porcentajePropina + "%): $" + String.format("%.2f", propina) + "\n" +
-                "Total final: $" + String.format("%.2f", totalFinal) + "\n";
+                "Total antes del descuento: $" + String.format("%.2f", obtenerTotalBedidas() + obtenerTotalPlatos()) + "\n" +
+                "Descuento aplicado: $" + String.format("%.2f", obtenerDescuento(tarjeta)) + "\n" +
+                "Propina (" + porcentajePropina + "%): $" + String.format("%.2f", obtenerPropina(tarjeta, porcentajePropina)) + "\n" +
+                "Total final: $" + String.format("%.2f", obtenerTotalConDescuento(tarjeta, porcentajePropina)) + "\n";
         return detalle;
     }
 

@@ -1,12 +1,13 @@
 package tp2.concurso.persistance;
 
+import tp2.concurso.Almacenamiento;
 import tp2.concurso.EscritorArchivo;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class EscritorDeArchivoEnDisco implements EscritorArchivo {
+public class EscritorDeArchivoEnDisco implements EscritorArchivo,Almacenamiento {
     private String rutaArchivo;
 
     public EscritorDeArchivoEnDisco(String rutaArchivo) {

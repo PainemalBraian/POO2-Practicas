@@ -35,7 +35,7 @@ public class RestauranteTest {
         Producto bebida = new Producto(Producto.TipoProducto.BEBIDA, "Coca Cola", "Bebida gaseosa", 100.0, 10);
         mesa.addProducto(bebida);
         mesa.addPedido(bebida, 2); // Pedido de 2 bebidas
-        mesa.realizarPedido();
+        mesa.confirmarPedido();
         mesa.pagarPedido(tarjetaVisa, 3);
 
         // Verificar el pago con descuento del 3% en bebidas
@@ -64,7 +64,7 @@ public class RestauranteTest {
         Producto plato = new Producto(Producto.TipoProducto.PLATO, "Pizza", "Pizza de muzzarella", 300.0, 10);
         mesa.addProducto(plato);
         mesa.addPedido(plato, 1); // Pedido de 1 plato
-        mesa.realizarPedido();
+        mesa.confirmarPedido();
         mesa.pagarPedido(tarjetaMastercard, 5);
 
         // Verificar el pago con descuento del 2% en platos
@@ -96,7 +96,7 @@ public class RestauranteTest {
         mesa.addProducto(plato);
         mesa.addPedido(bebida, 1); // Pedido de 1 bebida
         mesa.addPedido(plato, 1); // Pedido de 1 plato
-        mesa.realizarPedido();
+        mesa.confirmarPedido();
         mesa.pagarPedido(tarjetaComarcaPlus, 2);
 
         // Verificar el pago con descuento del 2% total
@@ -126,7 +126,7 @@ public class RestauranteTest {
         Producto bebida = new Producto(Producto.TipoProducto.BEBIDA, "Jugo", "Jugo de naranja", 120.0, 10);
         mesa.addProducto(bebida);
         mesa.addPedido(bebida, 1); // Pedido de 1 bebida
-        mesa.realizarPedido();
+        mesa.confirmarPedido();
         mesa.pagarPedido(tarjetaViedma, 5);
 
         // Verificar que no aplica descuento
