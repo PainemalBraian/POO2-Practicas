@@ -1,5 +1,5 @@
 package tp2.concurso;
-public class FakeEscritorDeArchivo implements EscritorArchivo{
+public class FakeAlmacenamiento implements Almacenamiento{
     private String info;
 
     @Override

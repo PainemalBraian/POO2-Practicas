@@ -1,6 +1,6 @@
 package tp2.concurso;
 
-import tp2.concurso.persistance.EmailService;
+import tp2.concurso.persistance.EmailServiceImplement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +25,7 @@ public class Concurso {
         this.inscriptos=new ArrayList<>();
         this.escritorArchivo = escritorArchivo; //Inyección de dependencia
     }
-    public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, Almacenamiento almacenamiento,EmailService emailService) {
+    public Concurso(LocalDate fechaApertura, LocalDate fechaLimite, Almacenamiento almacenamiento, EmailService emailService) {
         this.id = idConcurso++;
         this.fechaApertura = fechaApertura;
         this.fechaLimite = fechaLimite;

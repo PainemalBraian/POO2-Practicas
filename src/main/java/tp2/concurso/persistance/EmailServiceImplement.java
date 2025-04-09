@@ -1,13 +1,16 @@
 package tp2.concurso.persistance;
 
+import tp2.concurso.EmailService;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
 
-public class EmailService {
+public class EmailServiceImplement implements EmailService {
     private final String username = "34110542ff1e26"; // usuario de Mailtrap
     private final String password = "025dc737c44d11"; // contraseña de Mailtrap
 
+    @Override
     public void enviarEmail(String destinatario, String asunto, String mensaje) {
         // Configuración del servidor SMTP
         Properties propiedades = new Properties();

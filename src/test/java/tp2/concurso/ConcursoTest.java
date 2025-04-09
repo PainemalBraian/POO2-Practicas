@@ -25,11 +25,16 @@ public class ConcursoTest {
         var fechaLimite = fechaApertura.plusDays(10);
     //    Concurso concurso = new Concurso(fechaApertura, fechaLimite, new EscritorDeArchivoEnDisco(directorio.toString())); // Test En Disco
         var fakeInscripcion =  new FakeEscritorDeArchivo();
-        var concurso = new Concurso(fechaApertura, fechaLimite,fakeInscripcion);  // Test En Memoria
+        var fakeAlmacenamientoBD =  new FakeAlmacenamiento();
+        var fakeEmail =  new FakeEmailService();
+
+    //    var concurso = new Concurso(fechaApertura, fechaLimite,fakeInscripcion);  // Test En Memoria
+        var concurso = new Concurso(fechaApertura, fechaLimite,fakeAlmacenamientoBD,fakeEmail); //Test Aislado BD y Email
+
 
         // Participante
-        var participante = new Participante(12345, "Juan Perez");
-        var participante2 = new Participante(54321, "Martín Ramos");
+        var participante = new Participante(12345, "Juan Perez","email@email.email");
+        var participante2 = new Participante(54321, "Martín Ramos","asd@asd.asd");
 
         // Inscripción
         concurso.inscribirParticipante(participante);
@@ -37,8 +42,10 @@ public class ConcursoTest {
 
         // Verificar inscripción
     //    assertTrue(concurso.existParticipante(participante));
-        assertTrue(fakeInscripcion.startWith("Fecha"));
-
+    //    assertTrue(fakeInscripcion.startWith("Fecha"));
+        assertTrue(fakeAlmacenamientoBD.startWith("Fecha de Inscripción: ")); // Assert para Almacenamientobd
+        assertTrue(fakeEmail.mensajeStartWith("Hola ")); // Assert para Email
+        assertTrue(fakeEmail.destinarioStartWith("asd@asd.asd")); // Assert para Email
     }
 
     @Test
