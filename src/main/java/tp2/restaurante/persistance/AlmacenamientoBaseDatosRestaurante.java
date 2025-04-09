@@ -41,3 +41,15 @@ public class AlmacenamientoBaseDatosRestaurante extends DbController implements 
     }
 }
 
+
+//CREATE TABLE pagos (
+//        id_pago INT AUTO_INCREMENT PRIMARY KEY, -- ID único del pago
+//                id_mesa INT NOT NULL, -- ID de la mesa
+//                fecha_pago DATE NOT NULL, -- Fecha del pago
+//                total_antes_descuento DOUBLE NOT NULL, -- Total antes del descuento
+//                descuento_aplicado DOUBLE NOT NULL, -- Descuento aplicado
+//    propina DOUBLE NOT NULL, -- Propina aplicada
+//    total_final DOUBLE NOT NULL -- Total final después de descuento y propina
+//);
+
+//SELECT * FROM pagos;
