@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class DbController {
+public class DBAcces {
     protected Connection conn = null;
     protected static Properties prop = null;
 
