@@ -1,3 +1,38 @@
+    Temas y contenidos
+    
+    Objetos
+    Objetos anémicos
+    Recomendaciones de diseño (son 7 heurísticas)
+    Objetos completos
+    Objetos válidos
+    Tell dont ask
+    ifs preguntado por tipo a polimorfismo
+    
+    Testing unitario (set up, ejercitación, verificación), testing de exceptions
+    repo con ejemplos: https://github.com/enriquemolinari/oop2-encapsulamiento
+    repo con ejemplos: https://github.com/enriquemolinari/oop2-if2polimorfismo
+    
+    Depender de abstracciones e inyección de dependencias
+    Repo con ejemplos: https://github.com/enriquemolinari/oop2-dependencies
+    Desacoplando objetos de negocio de los detalles técnicos (persistencia u otros servicios como envío de emails).
+    testing en memoria con Fakes
+    
+    Refactoring
+    Dandole semántica a ciertas sentencias: extract method
+    Simplificación de IFs/Else para mejorar la legibilidad (código justificado a la derecha)
+    Parámetros de salida con Optional
+    Números mágicos
+    Collecting parameters
+    IFs por polimorfismo
+    Repo con ejemplos: https://github.com/enriquemolinari/oop2-refactoring
+    
+    Layers
+    Invertir dependencias entre paquetes.
+    Saber interpretar donde va la lógica de negocios vs lógica de UI u otro servicio.
+    Repo con ejemplo: https://github.com/enriquemolinari/oop2-layers
+
+#
+
     TP0 - Objetos Anémicos
 
     Implemente un sistema de Concursos, donde los participantes pueden inscribirse para participar de los mismos.
