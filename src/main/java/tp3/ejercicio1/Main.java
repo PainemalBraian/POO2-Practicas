@@ -11,8 +11,8 @@ public class Main {
         Cliente yo = new Cliente("Javier");
         yo.alquilar(alquilerElTunel);
         yo.alquilar(alquilerAntesDelFin);
-        Object[] resultado = yo.calcularDeudaYPuntosObtenidos();
-        System.out.println(resultado[0]);
-        System.out.println(resultado[1]);
+//        Object[] resultado = yo.calcularDeudaYPuntosObtenidos();
+//        System.out.println(resultado[0]);
+//        System.out.println(resultado[1]);
     }
 }

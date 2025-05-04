@@ -1,6 +1,6 @@
 package tp2.concurso.persistance;
 
-import tp2.DbController;
+import tp2.DBAcces;
 import tp2.concurso.Almacenamiento;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AlmacenamientoBaseDatosConcurso extends DbController implements Almacenamiento {
+public class AlmacenamientoBaseDatosConcurso extends DBAcces implements Almacenamiento {
     @Override
     public void guardarInscripcion(String contenido) {
         try (Connection conn = connect()) {

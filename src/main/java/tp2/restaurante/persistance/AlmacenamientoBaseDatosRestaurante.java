@@ -1,6 +1,6 @@
 package tp2.restaurante.persistance;
 
-import tp2.DbController;
+import tp2.DBAcces;
 import tp2.restaurante.Almacenamiento;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AlmacenamientoBaseDatosRestaurante extends DbController implements Almacenamiento {
+public class AlmacenamientoBaseDatosRestaurante extends DBAcces implements Almacenamiento {
     @Override
     public void guardarDetalle(String contenido) {
         try (Connection conn = connect()) {

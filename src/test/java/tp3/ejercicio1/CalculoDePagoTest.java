@@ -2,6 +2,8 @@ package tp3.ejercicio1;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class CalculoDePagoTest {
 
     @Test
@@ -18,12 +20,13 @@ public class CalculoDePagoTest {
         //exercise
         yo.alquilar(alquilerElTunel);
         yo.alquilar(alquilerAntesDelFin);
-        var resultado = yo.calcularDeudaYPuntosObtenidos(); //resultado (0)deuda (1)ptos
 
+        var deuda = yo.calcularDeuda();
+        var puntosObtenidos = yo.calcularPuntosObtenidos();
 
         //asserts
-
-        //assertEquals(,);
+        assertEquals(10.0,deuda);
+        assertEquals(2,puntosObtenidos);
     }
 
 }

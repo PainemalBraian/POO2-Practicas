@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
+    public static final double COEFICIENTE_DIAS_ALQUILADOS_REGULARES = 1.5;
+    public static final int COEFICIENTE_DIAS_ALQUILADOS_NUEVO_LANZAMIENTO = 3;
+    public static final double COEFICIENTE_DIAS_ALQUILADOS_INFANTILES = 1.5;
+    public static final double COEFICIENTE_MONTO_BASE_INFANTILES = 1.5;
+    public static final int COEFICIENTE_MONTO_BASE_NUEVO_LANZAMIENTO = 0;
+    public static final int COEFICIENTE_MONTO_BASE_REGULARES = 2;
     private List<Alquiler> alquileres = new ArrayList<Alquiler>();
     private String name;
 
@@ -11,40 +17,44 @@ public class Cliente {
         this.name = nombre;
     }
 
-    public Object[] calcularDeudaYPuntosObtenidos() {
-        Object[] resultado = new Object[2];
-        double total = 0;
-        int puntosAlquilerFrecuente = 0;
+    public double calcularDeuda() {
+        double deuda = 0;
         for (Alquiler alquiler : alquileres) {
             double monto = 0;
-// determine amounts for each line
+            // determine amounts for each line
             switch (alquiler.copia().obtenerCopiaLibro().codigoPrecio()) {
                 case Libro.REGULARES:
-                    monto += 2;
+                    monto += COEFICIENTE_MONTO_BASE_REGULARES;
                     if (alquiler.diasAlquilados() > 2)
-                        monto += (alquiler.diasAlquilados() - 2) * 1.5;
+                        monto += (alquiler.diasAlquilados() - 2) * COEFICIENTE_DIAS_ALQUILADOS_REGULARES;
                     break;
                 case Libro.NUEVO_LANZAMIENTO:
-                    monto += alquiler.diasAlquilados() * 3;
+                    monto += COEFICIENTE_MONTO_BASE_NUEVO_LANZAMIENTO;
+                    monto += alquiler.diasAlquilados() * COEFICIENTE_DIAS_ALQUILADOS_NUEVO_LANZAMIENTO;
                     break;
                 case Libro.INFANTILES:
-                    monto += 1.5;
+                    monto += COEFICIENTE_MONTO_BASE_INFANTILES;
                     if (alquiler.diasAlquilados() > 3)
-                        monto += (alquiler.diasAlquilados() - 3) * 1.5;
+                        monto += (alquiler.diasAlquilados() - 3) * COEFICIENTE_DIAS_ALQUILADOS_INFANTILES;
                     break;
             }
-            total += monto;
-            // sumo puntos por alquiler
-            puntosAlquilerFrecuente++;
-            // bonus por dos días de alquiler de un nuevo lanzamiento
+            deuda += monto;
+        }
+        return deuda;
+    }
+
+    public int calcularPuntosObtenidos() {
+        int puntosAlquilerFrecuente = 0;
+        // sumo puntos por alquiler
+        // bonus por dos días de alquiler de un nuevo lanzamiento
+        for (Alquiler alquiler : alquileres) {
+            puntosAlquilerFrecuente ++;
             if ((alquiler.copia().obtenerCopiaLibro().codigoPrecio() == Libro.NUEVO_LANZAMIENTO)
                     && alquiler.diasAlquilados() > 1) {
                 puntosAlquilerFrecuente++;
             }
         }
-        resultado[0] = total;
-        resultado[1] = puntosAlquilerFrecuente;
-        return resultado;
+        return puntosAlquilerFrecuente;
     }
 
     public void alquilar(Alquiler rental) {
