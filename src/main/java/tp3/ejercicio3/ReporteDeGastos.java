@@ -1,51 +1,51 @@
 package tp3.ejercicio3;
 
 import java.time.LocalDate;
-import java.util.List;
-
-enum TipoDeGasto {
-    CENA, DESAYUNO, ALQUILER_AUTO
-}
-
-class Gasto {
-    TipoDeGasto tipoGasto;
-    int monto;
-}
+import java.util.ArrayList;
+import static java.lang.System.*;
 
 public class ReporteDeGastos {
-    public void imprimir(List<Gasto> gastos) {
-        int total = 0;
-        int gastosDeComida = 0;
+    private ArrayList<Gasto> gastos = new ArrayList<>();
+    private int gastosDeComida = 0;
+    private int totalGastos = 0;
+    private StringBuffer detalleTotal = new StringBuffer();
 
-        System.out.println("Expenses " + LocalDate.now());
+    public void agregarGasto(Gasto gasto) throws RuntimeException {
+        gastos.add(gasto);
+    }
 
-        for (Gasto gasto : gastos) {
-            if (gasto.tipoGasto == TipoDeGasto.CENA || gasto.tipoGasto == TipoDeGasto.DESAYUNO) {
-                gastosDeComida += gasto.monto;
-            }
+    public int getGastosDeComida() {
+        return gastosDeComida;
+    }
 
-            String nombreGasto = "";
-            switch (gasto.tipoGasto) {
-                case CENA:
-                    nombreGasto = "Cena";
-                    break;
-                case DESAYUNO:
-                    nombreGasto = "Desayuno";
-                    break;
-                case ALQUILER_AUTO:
-                    nombreGasto = "Alquiler de Autos";
-                    break;
-            }
+    public int getTotalGastos() {
+        return totalGastos;
+    }
 
-            String marcaExcesoComidas = gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > 5000
-                    || gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > 1000 ? "X" : " ";
-
-            System.out.println(nombreGasto + "\t" + gasto.monto + "\t" + marcaExcesoComidas);
-
-            total += gasto.monto;
+    public String obtenerFormatoDetalleTotal() throws RuntimeException {
+        if (gastos.isEmpty()) {
+            throw new RuntimeException("No hay gastos para generar el reporte");
         }
 
-        System.out.println("Gastos de comida: " + gastosDeComida);
-        System.out.println("Total de gastos: " + total);
+        detalleTotal.append(getExpensesDate());
+        calcularGastos();
+        detalleTotal.append("Gastos de comida: ")
+                .append(gastosDeComida)
+                .append(lineSeparator())
+                .append("Total de gastos: ")
+                .append(totalGastos);
+        return String.valueOf(detalleTotal);
+    }
+
+    public void calcularGastos() {
+        for (Gasto gasto : gastos) {
+            gastosDeComida += gasto.calcularGastoDeComida();
+            totalGastos += gasto.monto();
+            detalleTotal.append(gasto.formatoDetalleDeGasto());
+        }
+    }
+
+    private String getExpensesDate() {
+        return "Expenses " + LocalDate.now() + lineSeparator();
     }
 }
