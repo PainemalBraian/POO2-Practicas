@@ -153,8 +153,10 @@
     Ejercicio 1
 
     Alguien, que no es Usted, implementó el siguiente programa.
-    El mismo tiene mezclado diferentes funciones: código de UI (JFrame, JTextField, JButton, etc),
-    código de base de datos (Connection, PreparedStatatement, etc) y código de modelo de dominio (Participante y sus reglas de validación).
+    El mismo tiene mezclado diferentes funciones:
+    código de UI (JFrame, JTextField, JButton, etc),
+    código de base de datos (Connection, PreparedStatatement, etc) y 
+    código de modelo de dominio (Participante y sus reglas de validación).
     Esto es un ejemplo simple, pero en aplicaciones grandes diseñar de esta forma genera varios problemas: código complicado, cualquier cambio afecta a todo el sistema, nada se puede reutilizar, muy difícil de testear.
     
     Se pide: Refactorice el código para implementar diseño en capas (invirtiendo la dependencias hacia model).
