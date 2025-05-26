@@ -63,10 +63,10 @@
      solo deben comunicarse con los de negocio/dominio, para eso se crean objetos "fake" en TEST que implementan la clase abstracta y proporcionan los metodos requeridos
     
      implements     
-      como desacoplar clase files de tp1.concurso.concurso a traves de abstracción, ej: con un metodo exportar de otra clase usada por una interface
+      como desacoplar clase files de tp1TestingUnitarios.concurso.concurso a traves de abstracción, ej: con un metodo exportar de otra clase usada por una interface
       Concurso no debe tener implementación de exportar.
       crear interface con meotodo abstracto, para que una clase la implemente
-      tp1.concurso.concurso debe estar enlazado a algo abstracto (la interface)
+      tp1TestingUnitarios.concurso.concurso debe estar enlazado a algo abstracto (la interface)
     
     Consideraciones     
     Generar archivo de texto (clase files). Investigar crear archivos en Java
@@ -179,7 +179,7 @@
     Se pide: Refactorice el código para implementar diseño en capas (invirtiendo la dependencias hacia model).
     Comience de a poco y pruebe manualmente luego de cada cambio.
 
-    package ar.unrn.tp4;
+    package ar.unrn.tp4Layers;
 
     import java.awt.ComponentOrientation;
     import java.awt.FlowLayout;
