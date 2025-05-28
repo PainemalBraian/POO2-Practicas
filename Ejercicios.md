@@ -605,8 +605,10 @@
 
     5. Un negocio comercializa diferentes tipos de remeras. Las remeras pueden ser importadas o nacionales.
     Para el cálculo del precio de venta se deben tener en cuenta que ambos tipos de remeras poseen un precio unitario.
+
     Además las remeras importadas sobre el precio unitario tienen un 3% de recargo más un 5% de impuesto aduanero.
     Por último el comercio aplica un 25% para determinar el precio final.
+
     Las remeras nacionales tienen un recargo de 1,5 % del costo de transporte y una bonificación del 20%.
     Por último el comercio aplica un 15% para determinar el precio final.
 

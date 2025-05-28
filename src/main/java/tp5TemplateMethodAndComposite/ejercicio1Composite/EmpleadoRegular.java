@@ -1,4 +1,4 @@
-package tp5TemplateMethodAndComposite.ejercicio1;
+package tp5TemplateMethodAndComposite.ejercicio1Composite;
 
 // No incluye Subordinados
 public class EmpleadoRegular implements Categoria {

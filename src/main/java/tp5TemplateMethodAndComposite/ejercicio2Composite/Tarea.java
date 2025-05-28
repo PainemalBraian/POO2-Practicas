@@ -1,4 +1,4 @@
-package tp5TemplateMethodAndComposite.ejercicio2;
+package tp5TemplateMethodAndComposite.ejercicio2Composite;
 
 public class Tarea implements ItemDeProyecto{
     private final String nombre;

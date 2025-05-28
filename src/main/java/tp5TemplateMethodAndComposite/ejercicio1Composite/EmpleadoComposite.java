@@ -1,4 +1,4 @@
-package tp5TemplateMethodAndComposite.ejercicio1;
+package tp5TemplateMethodAndComposite.ejercicio1Composite;
 
 import java.util.ArrayList;
 import java.util.List;

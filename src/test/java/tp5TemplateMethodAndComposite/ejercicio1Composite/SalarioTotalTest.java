@@ -1,4 +1,4 @@
-package tp5TemplateMethodAndComposite.ejercicio1;
+package tp5TemplateMethodAndComposite.ejercicio1Composite;
 
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
