@@ -1,4 +1,4 @@
-package Parcial;
+package practica.pack0;
 
 import static java.util.Objects.isNull;
 

@@ -1,4 +1,4 @@
-package Parcial;
+package practica.pack0;
 
 import org.junit.jupiter.api.Test;
 

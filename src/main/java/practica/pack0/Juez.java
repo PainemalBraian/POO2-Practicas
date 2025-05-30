@@ -1,4 +1,4 @@
-package Parcial;
+package practica.pack0;
 
 import java.util.ArrayList;
 import java.util.Collection;
