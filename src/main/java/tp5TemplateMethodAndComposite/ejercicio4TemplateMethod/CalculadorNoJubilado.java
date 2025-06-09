@@ -10,7 +10,6 @@ public class CalculadorNoJubilado extends Calculador {
         super(log, mes);
     }
 
-    @Override
     double calcularVariantePrecio() {
         if (mesEnPromocion == now().getMonth().getValue())
             return COEFICIENTE_PRECIO_SI_ES_MES_PROMOCION;

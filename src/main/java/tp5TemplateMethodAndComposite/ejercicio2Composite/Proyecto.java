@@ -2,8 +2,8 @@ package tp5TemplateMethodAndComposite.ejercicio2Composite;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class Proyecto {
+// No se usa (Eliminar)
+public class Proyecto implements ItemDeProyecto{
     private List<ItemDeProyecto> tareas = new ArrayList();
     private ImpresorPorConsola printer;
 
@@ -14,23 +14,16 @@ public class Proyecto {
     public void agregar(ItemDeProyecto tarea) {
         tareas.add(tarea);
     }
-
-    public void mostrar() {
+    @Override
+    public void print(String mensaje) {
         for (ItemDeProyecto tarea : tareas) {
             tarea.print("");
         }
+        printer.println("Tiempo total estimado del proyecto: " + tiempo() + " horas");
     }
 
-    private void mostrarTarea(ItemDeProyecto tarea, String indent) {
-        if (tarea instanceof Tarea) {
-            Tarea t = (Tarea) tarea;
-            this.printer.println(indent + "- " + t.getNombre());
-        } else if (tarea instanceof TareaCompleja) {
-            TareaCompleja tc = (TareaCompleja) tarea;
-            this.printer.println(indent + "+ " + tc.getNombre());
-            for (ItemDeProyecto sub : tc.getSubtareas()) {
-                mostrarTarea(sub, indent + "  ");
-            }
-        }
+    @Override
+    public int tiempo() {
+        return tareas.stream().mapToInt(ItemDeProyecto::tiempo).sum();
     }
 }

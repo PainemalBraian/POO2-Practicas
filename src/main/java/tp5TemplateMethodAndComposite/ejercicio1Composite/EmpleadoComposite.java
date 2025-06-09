@@ -3,25 +3,15 @@ package tp5TemplateMethodAndComposite.ejercicio1Composite;
 import java.util.ArrayList;
 import java.util.List;
 
-// Empleados con Subordinados
 public class EmpleadoComposite implements Categoria {
-    private String nombreCategoria;
-    private float salarioBase;
     private List<Categoria> subordinados = new ArrayList<>();
 
-    public EmpleadoComposite(String nombreCategoria, float salarioBase) {
-        this.nombreCategoria = nombreCategoria;
-        this.salarioBase = salarioBase;
-    }
-
-    @Override
-    public String tipoCategoria() {
-        return nombreCategoria;
+    public EmpleadoComposite() {
     }
 
     @Override
     public float salario() {
-        return salarioBase;
+        return calcularSalarioTotal();
     }
 
     @Override
@@ -29,11 +19,10 @@ public class EmpleadoComposite implements Categoria {
         subordinados.add(subordinado);
     }
 
-    @Override
     public float calcularSalarioTotal() {
-        float total = salarioBase;
+        float total = 0;
         for (Categoria subordinado : subordinados) {
-            total += subordinado.calcularSalarioTotal();
+            total += subordinado.salario();
         }
         return total;
     }

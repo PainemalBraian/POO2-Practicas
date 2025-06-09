@@ -9,7 +9,6 @@ public class CalculadorJubilado extends Calculador {
         super(log, mes);
     }
 
-    @Override
     double calcularVariantePrecio() {
         if (!(mesEnPromocion == now().getMonth().getValue())) //Así se encontraba la instrucción en el ejercicio.
             return COEFICIENTEPRECIO;

@@ -9,7 +9,7 @@ public abstract class Calculador {
         this.mesEnPromocion = mes;
     }
 
-    public double calcularPrecio(double precioProducto){
+    public final double calcularPrecio(double precioProducto){
         double precioTotal = precioProducto + (precioProducto * calcularVariantePrecio());
         log.log(this.getClass().getName() + " | Precio: " + precioTotal);
         return precioTotal;

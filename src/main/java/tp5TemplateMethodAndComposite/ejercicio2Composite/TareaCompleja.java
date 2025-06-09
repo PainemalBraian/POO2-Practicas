@@ -13,7 +13,7 @@ public class TareaCompleja implements ItemDeProyecto {
         this.printer = printer;
     }
 
-    public void agregarSubtarea(ItemDeProyecto tarea) {
+    public void agregar(ItemDeProyecto tarea) {
         subtareas.add(tarea);
     }
 
@@ -23,9 +23,15 @@ public class TareaCompleja implements ItemDeProyecto {
 
     @Override
     public void print(String mensaje) {
-        this.printer.println(mensaje + "- " + this.nombre);
+        this.printer.println(mensaje + "Tarea Compleja - " + this.nombre);
         for (ItemDeProyecto sub : subtareas)
             sub.print(mensaje + " ");
+        printer.println("Tiempo total estimado del proyecto: " + tiempo() + " horas");
+    }
+
+    @Override
+    public int tiempo() {
+        return subtareas.stream().mapToInt(ItemDeProyecto::tiempo).sum();
     }
 
     public List<ItemDeProyecto> getSubtareas() {

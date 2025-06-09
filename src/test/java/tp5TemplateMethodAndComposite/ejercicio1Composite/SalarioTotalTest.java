@@ -8,53 +8,46 @@ public class SalarioTotalTest {
 
     @Test
     public void calcularSalarioTotal1() throws IOException {
-        // Crear empleados regulares (sin subordinados)
-        Categoria empleado1 = new EmpleadoRegular("Empleado Regular", 1000);
-        Categoria empleado2 = new EmpleadoRegular("Empleado Regular", 1200);
+        Director director = new Director(100000);
+        Gerente gerente = new Gerente(60000);
+        MandoMedio mando = new MandoMedio(40000);
+        LiderProyecto lider = new LiderProyecto(25000);
+        EmpleadoRegular emp1 = new EmpleadoRegular(10000);
 
-        // Crear líder de proyecto y agregar empleados
-        Categoria lider = new EmpleadoComposite("Líder de Proyecto", 2000);
-        lider.agregarSubordinado(empleado1);
-        lider.agregarSubordinado(empleado2);
-
-        // Crear mando medio y agregar líder
-        Categoria mandoMedio = new EmpleadoComposite("Mando Medio", 3000);
-        mandoMedio.agregarSubordinado(lider);
-
-        // Crear gerente y agregar mando medio
-        Categoria gerente = new EmpleadoComposite("Gerente", 5000);
-        gerente.agregarSubordinado(mandoMedio);
-
-        // Crear director y agregar gerente
-        Categoria director = new EmpleadoComposite("Director", 8000);
+        lider.agregarSubordinado(emp1);
+        mando.agregarSubordinado(lider);
+        gerente.agregarSubordinado(mando);
         director.agregarSubordinado(gerente);
 
-        //asserts
-        assertEquals(20200,director.calcularSalarioTotal());
+        System.out.println("Salario total de la empresa: " + director.salario());
+        assertEquals(235000,director.salario());
     }
 
     @Test
     public void calcularSalarioTotal2() throws IOException {
-        // Crear empleados regulares (sin subordinados)
-        Categoria empleado1 = new EmpleadoRegular("Empleado Regular", 500);
+        Director director = new Director(120000);
 
-        // Crear líder de proyecto y agregar empleados
-        Categoria lider = new EmpleadoComposite("Líder de Proyecto", 2800);
-        lider.agregarSubordinado(empleado1);
+        Gerente gerente1 = new Gerente(70000);
+        Gerente gerente2 = new Gerente(65000);
 
-        // Crear mando medio y agregar líder
-        Categoria mandoMedio = new EmpleadoComposite("Mando Medio", 5000);
-        mandoMedio.agregarSubordinado(lider);
+        MandoMedio mando1 = new MandoMedio(40000);
+        LiderProyecto lider1 = new LiderProyecto(30000);
+        lider1.agregarSubordinado(new EmpleadoRegular(12000));
+        lider1.agregarSubordinado(new EmpleadoRegular(12000));
 
-        // Crear gerente y agregar mando medio
-        Categoria gerente = new EmpleadoComposite("Gerente", 9000);
-        gerente.agregarSubordinado(mandoMedio);
+        mando1.agregarSubordinado(lider1);
+        gerente1.agregarSubordinado(mando1);
 
-        // Crear director y agregar gerente
-        Categoria director = new EmpleadoComposite("Director", 15000);
-        director.agregarSubordinado(gerente);
+        MandoMedio mando2 = new MandoMedio(38000);
+        LiderProyecto lider2 = new LiderProyecto(28000);
+        lider2.agregarSubordinado(new EmpleadoRegular(11000));
+        mando2.agregarSubordinado(lider2);
+        gerente2.agregarSubordinado(mando2);
 
-        //asserts
-        assertEquals(32300,director.calcularSalarioTotal());
+        director.agregarSubordinado(gerente1);
+        director.agregarSubordinado(gerente2);
+
+        System.out.println("Salario total de la empresa: " + director.salario());
+        assertEquals(426000,director.salario());
     }
 }
