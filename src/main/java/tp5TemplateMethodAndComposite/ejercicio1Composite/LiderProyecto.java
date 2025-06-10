@@ -22,6 +22,8 @@ public class LiderProyecto implements Categoria{
 
     @Override
     public void agregarSubordinado(Categoria subordinado) {
+        if (subordinado.getClass() != EmpleadoRegular.class)
+            throw new RuntimeException("Un Lider de Proyecto solo puede insertar un subordinado de Empleado Regular");
         subordinados.add(subordinado);
     }
 

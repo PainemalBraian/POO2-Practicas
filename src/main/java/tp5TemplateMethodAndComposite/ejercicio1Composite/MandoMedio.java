@@ -21,6 +21,8 @@ public class MandoMedio implements Categoria{
 
     @Override
     public void agregarSubordinado(Categoria subordinado) {
+        if (subordinado.getClass() != LiderProyecto.class)
+            throw new RuntimeException("Un Mando Medio solo puede insertar un subordinado de tipo Lider de Proyecto");
         subordinados.add(subordinado);
     }
 }

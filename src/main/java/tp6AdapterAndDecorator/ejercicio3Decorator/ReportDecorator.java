@@ -1,0 +1,21 @@
+package tp6AdapterAndDecorator.ejercicio3Decorator;
+
+import java.io.File;
+
+public abstract class ReportDecorator implements Report{
+    protected Report report;
+
+    public ReportDecorator(Report report) {
+        this.report = report;
+    }
+
+    @Override
+    public void export(File file) {
+        // Exportar el reporte a un archivo.
+    }
+
+    @Override
+    public void simularExport(String fileName) {
+        report.simularExport(fileName); // delegación por defecto
+    }
+}

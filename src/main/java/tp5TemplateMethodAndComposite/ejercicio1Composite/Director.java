@@ -22,6 +22,8 @@ public class Director implements Categoria{
 
     @Override
     public void agregarSubordinado(Categoria subordinado) {
+        if (subordinado.getClass() != Gerente.class)
+            throw new RuntimeException("Un Director solo puede insertar un subordinado de tipo Gerente");
         subordinados.add(subordinado);
     }
 }

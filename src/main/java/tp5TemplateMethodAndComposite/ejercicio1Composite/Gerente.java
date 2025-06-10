@@ -22,6 +22,8 @@ public class Gerente implements Categoria{
 
     @Override
     public void agregarSubordinado(Categoria subordinado) {
+        if (subordinado.getClass() != MandoMedio.class)
+            throw new RuntimeException("Un Gerente solo puede insertar un subordinado de tipo Mando Medio");
         subordinados.add(subordinado);
     }
 
