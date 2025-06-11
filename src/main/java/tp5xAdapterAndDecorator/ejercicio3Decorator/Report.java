@@ -1,4 +1,4 @@
-package tp6AdapterAndDecorator.ejercicio3Decorator;
+package tp5xAdapterAndDecorator.ejercicio3Decorator;
 
 import java.io.File;
 

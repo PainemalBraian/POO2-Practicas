@@ -1,10 +1,10 @@
-package tp6AdapterAndDecorator.ejercicio3Decorator;
+package tp5xAdapterAndDecorator.ejercicio3Decorator;
 
 import java.io.File;
 
-public class ReportValidarExiste extends ReportDecorator {
+public class ReportValidarCompleto extends ReportValidarNull {
 
-    public ReportValidarExiste(Report reporte) {
+    public ReportValidarCompleto(Report reporte) {
         super(reporte);
     }
 

@@ -1,4 +1,4 @@
-package tp6AdapterAndDecorator.ejercicio1Adapter;
+package tp5xAdapterAndDecorator.ejercicio1Adapter;
 
 public class MotorAdaptable extends Motor{
     MotorElectrico motor;

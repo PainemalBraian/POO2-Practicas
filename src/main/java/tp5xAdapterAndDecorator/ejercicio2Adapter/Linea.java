@@ -1,4 +1,4 @@
-package tp6AdapterAndDecorator.ejercicio2Adapter;
+package tp5xAdapterAndDecorator.ejercicio2Adapter;
 
 class Linea implements Figura {
     private final Coordenada coordenada;

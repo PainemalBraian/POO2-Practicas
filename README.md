@@ -646,8 +646,8 @@
     Se desea crear un sistema de pedidos que permita al usuario seleccionar el combo deseado, así como armar su propio pedido con las porciones adicionales que desee.
     El sistema deberá informar sobre el pedido del usuario detallando su descripción y el valor total del mismo.  
     
-    a) Aplique el patrón Decorator para diseñar el modelo de clases que de solución al problema planteado.  
-    b) Implemente la solución en Java, especificando en el programa principal el armado de 2 combos distintos con al menos dos adicionales cada uno.  
+    a) Aplique el patrón Decorator para diseñar el modelo de clases que de solución al problema planteado.
+    b) Implemente la solución en Java, especificando en el programa principal el armado de 2 combos distintos con al menos dos adicionales cada uno.
     c) Implemente la creación de los combos utilizando el patron Builder.
     
     5. Aplique decorador al ejercicio 4 del TP 2.
@@ -657,7 +657,7 @@
 #
 
 
-    TP6 - Observer
+    TP6 - Observer 
 
 
 #
