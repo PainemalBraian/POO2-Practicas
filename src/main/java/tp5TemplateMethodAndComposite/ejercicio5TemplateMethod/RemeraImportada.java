@@ -8,7 +8,7 @@ public class RemeraImportada extends Remera{
         super(precioUnitario);
     }
 
-    @Override
+
     double calcularVariante() {
         return (1 + RECARGO + IMPUESTO_ADUANERO); //1.08
     }

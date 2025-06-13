@@ -658,12 +658,206 @@
 
 
     TP6 - Observer 
+    
+    Dado el siguiente Medidor de Temperatura que consulta un servicio web de Wheather Channel:
+    java
+    package ar.unrn.model;
+    
+    public class Medidor {
+    private String temperatura;
+    private ClimaOnline clima;
+
+    public Medidor(ClimaOnline clima) {
+        this.clima = clima;
+    }
+
+    public String leerTemperatura() {
+        // leo la temperatura del servicio web
+        this.temperatura = this.clima.temperatura();
+        return this.temperatura;
+        }
+    }
+
+
+    package ar.unrn.model;
+
+    public interface ClimaOnline {
+        String temperatura();
+    }
+
+
+    package ar.unrn.model;
+
+    import java.util.Random;
+    
+    public class WeatherChannelService implements ClimaOnline {
+    
+    @Override
+    public String temperatura() {
+        int temp = new Random().nextInt(100);
+        return temp + " c";
+        }
+    }
+
+    Se pide:
+
+    Modifique la clase WheatherChannelService para consumir el servicio web de OpenWeatherMap.
+    Obtenga una cuenta gratuita desde: Registro OpenWeather.
+    Una vez registrado, recibirá un email con una API KEY necesaria para consumir los servicios.
+    La activación de la API KEY demora unos 15 minutos una vez creada.
+    Ejemplo de consumo del clima en Viedma en celsius: https://api.openweathermap.org/data/2.5/weather?q=Viedma,Argentina&units=metric&APPID=TU_API_KEY
+
+    Utilizando el patrón Observer, escriba dos observadores:
+    a. Uno que guarde en un archivo de texto una entrada por cada lectura que se realiza de la temperatura y la fecha en la que se realiza.
+    b. Otro que imprima en consola cada vez que se lea la temperatura.
+
+    Si la temperatura es menor a 12 grados, debe imprimir: "Hace frío, se encenderá la caldera"
+    Si la temperatura es mayor a 17 grados, debe imprimir: "Hace calor, se encenderá el aire acondicionado"
+
+    (OPCIONAL) Mejore la implementación anterior utilizando un Decorador.
+    El resultado final es que el ejercicio se resuelve utilizando ambos patrones: Observer y Decorador.
+
+    Utilizando el patrón Observer, modifique el ejercicio 1 del TP de layers para enviar un email al participante cada vez que se inscriba.
+    En la pantalla de inscripción deberá agregar un input para que se pueda cargar el email.
+
+    (OPCIONAL) Utilizando el ejercicio del restaurante del TP 1 y TP 2
+    implemente utilizando el patrón Observer una pantalla que tendrá el gerente general del restaurante con el monto de la facturación de la última mesa.
+    Cree una pantalla para seleccionar platos, bebidas y permita pagar el total.
+    Cada vez que se efectúa una venta, la pantalla del gerente reflejará el monto facturado.
+
+    Si el monto facturado supera los 300.000 pesos, el monto en la pantalla debe aparecer de color rojo.
 
 
 #
 
 
     TP7 - Strategy
+    
+    1. Una empresa que se dedica a la comercialización de productos informáticos a través de internet ofrece a
+    sus clientes la posibilidad de optar entre diferentes formas de envío de los productos.
+    El cliente va almacenando productos en su carrito de compras y finalmente el sistema calcula el costo total incluyendo el envío.
+    El costo total será la suma de precio de cada producto del carrito, más el envío que cada compañía ofrece su forma de cálculo específica.  
+
+    Las posibilidades de envío que ofrece son a través de las siguientes empresas:
+    
+    - Colectivos Sur
+        - Si el destino es Capital Federal hay un costo fijo de 1000 pesos.
+        - Si el destino es Gran Buenos Aires el monto fijo es de 1500 pesos.
+        - Cualquier otro destino el monto fijo es **3000 pesos**.
+        - Si el peso total de los productos supera los 5kg (hasta 30kg), se agrega un adicional de 500 pesos*
+        - Pasados los 30kg, el adicional es de **2000 pesos**.
+    
+      - Correo Argentino
+          - Si el destino es Capital Federal se cobra un monto fijo de 500 pesos.
+          - Cualquier otro destino, se cobra un fijo de 800 pesos, más un monto que sale de calcular 5 pesos multiplicado por la cantidad de kilómetros entre Capital Federal y el destino.
+          - Esta distancia la brinda un servicio externo web: `http://distancia.ar?origen=capital&destino=xxx` (Este servicio no existe, es simplemente para ilustrar el ejercicio).
+    
+    El sistema debe permitir al cliente optar por cualquier forma de envío e informarle el costo asociado a la opción elegida.
+    
+    a) Aplicando el patrón Strategy diseñe una posible solución al problema planteado  
+    Implemente en Java la solución propuesta y dos casos de test
+    
+    ---
+    
+    2. Implemente en Java una clase `Persona` que responda al mensaje `fechaNacimiento()`.
+       Este mensaje devuelve un `String` con la fecha de nacimiento de la persona.  
+       La fecha de nacimiento puede ser:
+        - Corta: `3-06-1986`
+        - Larga: `3 de Junio de 1986`
+    
+    Implemente utilizando el patrón Strategy.
+    Implemente dos casos de test.
+    
+    ---
+    
+    3. La siguiente clase `Producto` calcula el precio de un producto teniendo en cuenta **impuestos, descuentos y envío**.
+    
+    Luego se presenta un `Main` para mostrar cómo se utiliza.
+    
+    Se pide:
+    
+         1. Refactorizar para remover los `IFs` sobre los tipos de producto aplicando el patrón Strategy
+            - Creando la jerarquía polimórfica con un `CalculadorDePrecios`, no sobre `Producto`.
+            - `Producto` delega en la estrategia de forma polimórfica.
+    
+         2. Modifique el `Main` para que funcione de acuerdo al refactor realizado.
+    
+    
+    enum TipoProducto {
+        LIBRO,
+        ALIMENTO,
+        MEDICINA,
+        OTRO
+    }
+    
+    class Producto {
+        public TipoProducto tipo;
+        public double precio;
+    
+        public Producto(TipoProducto tipo, double precio) {
+            this.tipo = tipo;
+            this.precio = precio;
+        }
+    
+        public double precioFinal() {
+            double impuestos = 0;
+            double descuentos = 0;
+            boolean envioGratis = false;
+    
+            if (tipo == TipoProducto.LIBRO) {
+                impuestos = 0.1;
+                descuentos = 0.1;
+                if (precio > 100) {
+                    envioGratis = true;
+                }
+            } else if (tipo == TipoProducto.ALIMENTO) {
+                impuestos = 0.05;
+                if (precio > 100) {
+                    descuentos = 0.15;
+                }
+                if (precio > 200) {
+                    envioGratis = true;
+                }
+            } else if (tipo == TipoProducto.MEDICINA) {
+                impuestos = 0;
+                if (precio > 50) {
+                    descuentos = 0.1;
+                }
+                if (precio > 100) {
+                    envioGratis = true;
+                }
+            } else {
+                impuestos = 0.15;
+                if (precio > 50) {
+                    descuentos = 0.05;
+                }
+                if (precio > 200) {
+                    envioGratis = true;
+                }
+            }
+    
+            double total = precio * (1 + impuestos) * (1 - descuentos);
+            if (envioGratis) {
+                total -= 10;
+            }
+            return total;
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            var p1 = new Producto(TipoProducto.LIBRO, 30);
+            var p2 = new Producto(TipoProducto.MEDICINA, 330);
+            var p3 = new Producto(TipoProducto.ALIMENTO, 130);
+            var p4 = new Producto(TipoProducto.OTRO, 130);
+    
+            System.out.println(p1.precioFinal());
+            System.out.println(p2.precioFinal());
+            System.out.println(p3.precioFinal());
+            System.out.println(p4.precioFinal());
+        }
+    }
+
 
 
 #
