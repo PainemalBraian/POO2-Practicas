@@ -49,6 +49,12 @@
             <artifactId>jdbi3-core</artifactId>
             <version>3.35.0</version>
         </dependency>
+        <!-- Json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
 
     </dependencies>
 </project>

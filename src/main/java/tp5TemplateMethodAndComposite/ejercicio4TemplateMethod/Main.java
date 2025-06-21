@@ -2,7 +2,7 @@ package tp5TemplateMethodAndComposite.ejercicio4TemplateMethod;
 
 public class Main {
     public static void main(String[] args) {
-        LogTransaction consola = new ConsolaLogTransaction();
+        LogTransaction consola = new ConsolaLog();
         Calculador cal = new CalculadorNoJubilado(consola,5);
         Calculador cal2 = new CalculadorJubilado(consola,4);
 

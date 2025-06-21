@@ -29,7 +29,6 @@ public class SegurosComposite implements Seguro {
         return total * descuentoAcumulado;
     }
 
-    @Override
     public void agregarSeguro(Seguro seguro) {
         seguros.add(seguro);
     }
@@ -37,4 +36,5 @@ public class SegurosComposite implements Seguro {
 //    public void agregarPaquete(List<Seguro> seguros) {
 //        this.seguros.addAll(seguros);
 //    }
+
 }

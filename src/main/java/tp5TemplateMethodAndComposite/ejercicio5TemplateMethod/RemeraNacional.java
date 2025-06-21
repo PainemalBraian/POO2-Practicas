@@ -8,7 +8,6 @@ public class RemeraNacional extends Remera{
         super(precioUnitario);
     }
 
-    @Override
     double calcularVariante() {
         return (1 + RECARGO_TRANSPORTE - BONIFICACION); // 0.815
     }

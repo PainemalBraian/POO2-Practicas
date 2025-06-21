@@ -12,7 +12,7 @@ public class ReportValidarCompleto extends ReportValidarNull {
         if (file.exists()) {
             throw new IllegalArgumentException("El archivo ya existe...");
         }
-        // Exportar el reporte a un archivo.
+        // Comprobar si es null y luego Exportar el reporte a un archivo.
         super.export(file);
     }
 
@@ -20,7 +20,7 @@ public class ReportValidarCompleto extends ReportValidarNull {
         if (fileName.equals("Existe")) {
             throw new IllegalArgumentException("El archivo ya existe...");
         }
-        // Exportar el reporte a un archivo.
+        // Comprobar si es null y luego Exportar el reporte a un archivo.
         super.simularExport(fileName);
     }
 }

@@ -8,7 +8,7 @@ public class ProyectoTest {
     @Test
     public void testTiempoTotalProyectoSimple() {
         ImpresorPorConsola consola = System.out::println;
-        TareaCompleja tareaCompleja = new TareaCompleja("Historia: Diseño",consola);
+        Proyecto tareaCompleja = new Proyecto("Historia: Diseño",consola);
 
         tareaCompleja.agregar(new Tarea("UI Básica", 4, consola));
         tareaCompleja.agregar(new Spike("Análisis técnico", 2, consola));
@@ -22,7 +22,7 @@ public class ProyectoTest {
         ImpresorPorConsola consola = System.out::println;
 //        Proyecto proyecto = new Proyecto(consola);
 
-        TareaCompleja historia = new TareaCompleja("Historia: Registro", consola);
+        Proyecto historia = new Proyecto("Historia: Registro", consola);
         historia.agregar(new Tarea("Backend", 3, consola));
         historia.agregar(new Tarea("Frontend", 2, consola));
         historia.agregar(new Spike("Revisión UX", 1, consola));

@@ -1,6 +1,6 @@
 package tp5TemplateMethodAndComposite.ejercicio1Composite;
 
-public class TestEmpleados {
+public class Mian {
     public static void main(String[] args) {
         Director director = new Director(100000);
         Gerente gerente = new Gerente(60000);

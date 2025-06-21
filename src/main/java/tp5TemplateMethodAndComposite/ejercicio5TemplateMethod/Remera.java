@@ -7,7 +7,7 @@ public abstract class Remera {
         this.precioUnitario = precioUnitario;
     }
 
-    double calcularPrecio(){
+    final double calcularPrecio(){
         double precio = this.precioUnitario;
         double precioTotal = (precio * calcularVariante());
         System.out.println(this.getClass().getName() +" | Precio: "+precioTotal);

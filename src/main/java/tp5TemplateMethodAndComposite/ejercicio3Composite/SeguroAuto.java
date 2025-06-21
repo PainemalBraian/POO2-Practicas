@@ -12,9 +12,9 @@ public class SeguroAuto implements Seguro{
         return costoIndividual;
     }
 
-    @Override
-    public void agregarSeguro(Seguro seguro) {
-        throw  new RuntimeException("Este tipo de seguro no puede agregar seguros");
-    }
+//    @Override
+//    public void agregarSeguro(Seguro seguro) {
+//        throw  new RuntimeException("Este tipo de seguro no puede agregar seguros");
+//    }
 
 }

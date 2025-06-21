@@ -1,6 +1,6 @@
 package tp5TemplateMethodAndComposite.ejercicio3Composite;
 
-public class TestSeguros {
+public class Main {
     public static void main(String[] args) {
         Seguro auto = new SeguroAuto(10000);
         Seguro vida = new SeguroVida(8000);

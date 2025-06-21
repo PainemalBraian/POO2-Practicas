@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SalarioTotalTest {
 
     @Test
-    public void calcularSalarioTotal1() throws IOException {
+    public void calcularSalarioTotal1(){
         Director director = new Director(100000);
         Gerente gerente = new Gerente(60000);
         MandoMedio mando = new MandoMedio(40000);
@@ -24,7 +24,7 @@ public class SalarioTotalTest {
     }
 
     @Test
-    public void calcularSalarioTotal2() throws IOException {
+    public void calcularSalarioTotal2(){
         Director director = new Director(120000);
 
         Gerente gerente1 = new Gerente(70000);

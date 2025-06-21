@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConcursoTest {
-    static String DIRECTORIO ="C:\\Users\\braia\\Downloads\\tmp\\Objetos 2\\inscripciones.txt";
+    static String DIRECTORIO ="inscripciones.txt";
 
     @Test
     public void inscribirParticipanteDentroDelPlazo() throws IOException {

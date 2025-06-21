@@ -754,13 +754,13 @@
     
     El sistema debe permitir al cliente optar por cualquier forma de envío e informarle el costo asociado a la opción elegida.
     
-    a) Aplicando el patrón Strategy diseñe una posible solución al problema planteado  
+    a) Aplicando el patrón Strategy diseñe una posible solución al problema planteado
     Implemente en Java la solución propuesta y dos casos de test
     
     ---
     
     2. Implemente en Java una clase `Persona` que responda al mensaje `fechaNacimiento()`.
-       Este mensaje devuelve un `String` con la fecha de nacimiento de la persona.  
+       Este mensaje devuelve un `String` con la fecha de nacimiento de la persona.
        La fecha de nacimiento puede ser:
         - Corta: `3-06-1986`
         - Larga: `3 de Junio de 1986`
@@ -770,7 +770,7 @@
     
     ---
     
-    3. La siguiente clase `Producto` calcula el precio de un producto teniendo en cuenta **impuestos, descuentos y envío**.
+    3. La siguiente clase `Producto` calcula el precio de un producto teniendo en cuenta impuestos, descuentos y envío.
     
     Luego se presenta un `Main` para mostrar cómo se utiliza.
     
@@ -865,14 +865,264 @@
 
     TP8 - Proxy
 
+    1. El siguiente programa consta de una clase Persona y una clase Teléfono, donde una persona puede tener uno o varios teléfonos.
+    La clase PersonaDao que permite obtener de una base de datos una instancia de Persona dado su identificador, y un Main que obtiene una persona e
+    imprime su nombre y los teléfonos que posee.
+    Para poder ejecutar este programa, en su base de datos preferida, genere las siguientes tablas (que permitirán modelar a personas y su relación
+    uno a muchos con teléfonos):
+    
+    personas (id: int, nombre: varchar(100));
+    telefonos (id: int, numero: varchar(20), idPersona: int); idPersona es foraña de personas.
+    
+    Además, implemente el método privado PersonasDao#obtenerConexion() a su gusto.
+    Finalmente, inserte una persona con varios teléfonos y ejecute el método Main#main para comprobar su funcionamiento.
+
+    public class Main {
+        public static void main(String args[]) {
+            PersonaDao dao = new PersonaDao();
+            Persona p = dao.personaPorId(1);
+            System.out.println(p.nombre());
+            for (Telefono telefono : p.telefonos()) {
+            System.out.println(telefono);
+            }
+        }
+    }
+
+    public class Telefono {
+        private String numero;
+        
+        public Telefono(String numero) {
+            this.numero = numero;
+        }
+        public String numero() {
+            return numero;
+        }
+        @Override
+        public String toString() {
+            return numero;
+        }
+    }
+
+    public class Persona {
+        private int id;
+        private String nombre;
+        private Set<Telefono> telefonos;
+        
+        public Persona(int id, String nombre, Set<Telefono> telefonos) {
+            this.id = id;
+            this.nombre = nombre;
+            this.telefonos = telefonos;
+        }
+        public Telefono[] telefonos() {
+            return telefonos.toArray(new Telefono[telefonos.size()]);
+        }
+        public String nombre() {
+            return nombre;
+        }
+    }
+
+    public class PersonaDao {
+        private Connection obtenerConexion() {
+            //Utilice aquí su motor de BD preferido
+        }
+
+        public Persona personaPorId(int id) {
+            String sql = "select p.nombre,t.numero " + "from personas p, telefonos t " + "where p.id = t.idpersona and p.id = ?";
+            try (Connection conn = obtenerConexion();
+            PreparedStatement statement =
+            conn.prepareStatement(sql);) {
+                statement.setInt(1, id);
+                ResultSet result = statement.executeQuery();
+                Set<Telefono> telefonos = new HashSet<Telefono>();
+                String nombrePersona = null;
+                while (result.next()) {
+                    nombrePersona = result.getString(1);
+                    telefonos.add(new Telefono(result.getString(2)));
+                }
+                return new Persona(id, nombrePersona, telefonos);
+            } catch(SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    Como puede observar, el método PersonaDao#personaPorId realiza una consulta SQL para obtener la persona y todos sus teléfonos, y
+    devuelve una instancia de Persona, con su colección de teléfonos.
+    Usted advierte que hay otros clientes (además de Main#main) de PersonaDao que no necesitan tener la colección de teléfonos, porque no invocan el método Persona#telefonos.
+    Con lo cual podría evitarse realizar una consulta SQL de junta (join) entre dos tablas para la mayoría de los casos.
+    
+    Utilice el patrón proxy y modifique el método PersonaDao#personaPorId de modo tal que la colección de teléfonos en Persona se popule únicamente si se invoca al método Persona#telefonos.
+    Las clases Main, Persona y Telefono no deben modificarse.
+    Indique que clases del código entregado son el Cliente, el Proxy y el SujetoReal. Ayuda: La interfaz Set definida en Persona corresponde al Sujeto del patrón Proxy.
+
+    2. La empresa Tres Estrellas desea modificar su sistema para agregar control de acceso a los
+    archivos que maneja. El sistema posee, entre otras, las siguientes clases:
+
+     public enum Permiso {
+         ADMIN, BASICO, INTERMEDIO
+     }
+
+     public class Usuario {
+         private String name;
+         private List<Permiso> permisos;
+        
+         public Usuario(String name, List<Permiso> permisos) {
+             this.name = name;
+             this.permisos = permisos;
+         }
+         public boolean poseePermiso(Permiso permiso) {
+             return permisos.stream().anyMatch(p -> p.equals(permiso));
+         }
+     }
+     public class FileAccess {
+         private String ruta;
+         private String nombreArchivo;
+         
+         public FileAccess(String ruta, String nombre) {
+             this.ruta = ruta;
+             this.nombreArchivo = nombre;
+         }
+         public String readFile() throws IOException {
+             return Files.readString(Paths.get(this.ruta + "/" + this.nombreArchivo));
+         }
+     }
+
+     Utilizando el patrón Proxy implemente el control de acceso a la lectura de los archivos.
+     Aquellos archivos cuyo nombre comienza con la letra “i” (de importante), solo los usuario con permiso ADMIN pueden accederlos.
+     Los archivos que comienzan con la letra “m”, lo pueden ver los usuarios con permiso ADMIN e INTERMEDIO.
+     Cualquier otro archivo, lo ven todos los usuarios sin importar qué permiso tengan.
+     Utilice Usuarios#possePermiso para verificar permisos. En caso de intento de lectura sin permiso lance una excepción indicando el error.
+     
+     Escriba un Main mostrando como se usa.
+     Realice el diagrama de clases, ponga claramente los método más importantes.
+
 
 #
 
 
     TP9 - Aspectos
+    En el repositorio https://github.com/enriquemolinari/oop2-aop pueden encontrar ejemplo usando AspjectJ con Maven.
+    
+    1. Prepare el ambiente, clone el repositorio y revise que pueda compilar y ejecutar aplicaciones utilizando AspectJ.
+    Recuerde que para compilar y ejecutar debe utilizar los comandos por consola de Maven: mvn compile y mvn exec:java.
+    
+    2. Utilice la implementación del ejercicio 3 del TP de layers (RadioCompetition) y escriba una anotación @Log que permita marcar los métodos que queremos loguear cada vez que son llamados.
+    Del método invocado se debe registrar su nombre y el valor de cada parámetro y la fecha/hora de invocación.
+    Sobre el valor de cada parámetro, éstos deben estar separados por | (pipe) en caso que existan y en otro caso se registra “sin parámetros”.
+    El logueo debe persistirse en un archivo de texto. Como prueba para la verificación de que lo implementado funciona, “aspectee” los métodos saveInscription y todosLosConcursos.
+    El archivo de logueo debe quedar de la siguiente forma:
+    “saveInscription”, “valor1|valor2”, “2024/07/21 15:30:32”
+    “saveInscription”, “valor0|valor4”, “2024/07/21 15:30:34”
+    “todosLosConcuros”, “sin parametros”, “2024/07/21 15:32:32”
 
 
 #
 
 
     TP10 - FrameWorks
+
+    1. Desarrolle un framework para escribir aplicaciones que permitan lanzar ciertas acciones o procesos por línea de comandos.
+    El framework deberá desplegar un menú con opciones (por consola), de los procesos que se pueden lanzar y se quedará esperando el input del usuario final (quien opera el sistema).  
+    Al recibir un input, el framework ejecutará la acción en cuestión, e informará del éxito o fracaso de la ejecución (por consola también).
+    Luego, nuevamente desplegará el menú y se quedará a la espera de una nueva entrada por parte del usuario final, o la opción “Salir” que termina el programa.
+    El framework proveerá de una interfaz que los usuarios del framework (en adelante desarrolladores) deberán implementar para cada acción que deseen tener disponible en el menú para ejecutar.
+    Esta interfaz será el mecanismo de extensión del framework. La interfaz será la siguiente:
+    
+    public interface Accion {
+        void ejecutar();
+        String nombreItemMenu();
+        String descripcionItemMenu();
+    }
+
+    Además deberá ofrecer una alternativa de configuración (mediante un archivo de texto) por el cual los desarrolladores podrán especificar las clases que el framework utilizará.   
+    Para una buena organización del código, utilice tres paquetes para el proyecto. En un paquete llamado {suApellido}.framework, pondrá las clases del framework.
+    En el otro paquete llamado {suApellido}.utilizacion, pondrá dos clases concretas que implementen el punto de extensión del framework.
+    El path donde se encuentra el archivo de configuración deberá indicarlo el usuario vía algún parámetro del framework.  
+    Y en {suApellido}.main, una clase Main que muestre cómo se instancia el framework y se muestre su uso.
+
+    Ejemplo de Uso
+    Supongamos que un desarrollador utiliza nuestro framework, escribiendo los siguientes implementaciones de Accion:
+    public class AccionUno implements Accion {
+        @Override
+        public void ejecutar() {
+            System.out.println("Ejecutando AccionUno...");
+        }
+
+        @Override
+        public String nombreItemMenu() {
+            return "Accion 1";
+        }
+        
+        @Override
+        public String descripcionItemMenu() {
+            return "Esto es para traer los twitts de José...";
+            }
+        }
+        
+    public class AccionDos implements Accion {
+        
+        @Override
+        public void ejecutar() {
+            System.out.println("Ejecutando AccionDos...");
+        }
+        
+        @Override
+        public String nombreItemMenu() {
+            return "Accion 2";
+        }
+        
+        @Override
+        public String descripcionItemMenu() {
+            return "Esto trae las primeras diez personas de la BD...";
+        }
+    }
+
+    Y el siguiente archivo de configuración (si desea utilizar otro mecanismo para descubrir las clases que implementan Accion, puede hacerlo):
+    #Implementaciones de Acciones acciones:  {paquete}.AccionUno; {paquete}.AccionDos
+    Al instanciar el framework (desde un Main), en consola debería mostrarse el siguiente menú:
+
+    Bienvenido, estas son sus opciones:
+    
+    1. AccionUno (Esto es para traer los twitts de José...)
+    2. AccionDos (Esto trae las primeras diez personas de la BD...)
+    3. Salir
+    
+    Ingrese su opción: _
+
+
+    (Si se agregara una nueva clase Acción, entonces el menú mostraría esa nueva opción. Ahora solo se muestran dos acciones como ejemplo).
+    El usuario final ingresará una opción, y el framework ejecutará la acción solicitada y una vez finalizada, volverá a mostrar el menú y esperará por una nueva entrada del usuario.
+    
+    Tips para implementar éste primer punto: En el repo https://github.com/enriquemolinari/oop2-frameworks
+    podrá encontrar en el paquete blackbox.v2 como se utiliza reflections para instanciar objetos a partir de strings con el nombre de las clases.
+    Y además cómo pueden usar archivos de configuración.
+
+    2. Genere, solo con los fuentes del framework (no del cliente o utilización) un jar denominado framework-v1.0.jar, y cree otro proyecto en su IDE para utilizarlo.
+
+    3. (OPCIONAL) Escriba una nueva versión (la 1.1) del framework algo más moderna, dibuje la pantalla utilizando la librería jline consoleui (https://jline.org/docs/modules/console-ui) o
+    Lanterna (https://github.com/mabe02/lanterna).
+    Tener en cuenta que sus clientes deben poder migrar a la nueva versión del framework sin necesidad de modificar sus clases (de forma totalmente transparente).
+    
+    Genere un nuevo jar framework-v1.1.jar y utilícelo ahora en el proyecto cliente generado en el punto anterior.
+    Observe como cambiando de un jar al otro, cambia la UI dibujada por el framework sin cambiar código del cliente del framework.
+
+    4. (OPCIONAL) Escriba una nueva versión (la 1.2), que soporte configurarlo en formato json del tipo:
+    {
+       "acciones": ["{paquete}.AccionUno", "{paquete}.AccionUno", "{paquete}.AccionXXX"]
+    }
+
+    Tener en cuenta que sus clientes deben poder migrar a la nueva versión del framework sin necesidad de modificar sus clases (de forma totalmente transparente),
+    ni archivos de configuración, ambos formatos serán soportados por el framework.
+    Genere un nuevo jar framework-v1.2.jar y utilícelo ahora en el proyecto cliente generado en el punto anterior.
+
+    5. (OPCIONAL) Escriba una nueva versión del framework (1.3) que permita ejecutar varias acciones en forma concurrente.
+    Ahora el menú debe permitir seleccionar 1 o varias tareas, para luego lanzarlas.
+    Las tareas se ejecutarán en forma concurrente en N threads, donde N es el máximo número de threads permitidos para ser lanzados concurrentemente.
+    Éste valor es un nuevo ítem de configuración del framework.
+    Esta nueva opción de configuración se incluirá solo en la versión de configuración de tipo json, de la siguiente forma:
+    {
+       "acciones": ["{paquete}.AccionUno", "{paquete}.AccionUno", "{paquete}.AccionXXX"],
+       "max-threads": N
+    }
+    Nota: Puede utilizar la utilidad que viene en la JDK llamada ExecutorService, que permite lanzar procesos en forma concurrente.
+

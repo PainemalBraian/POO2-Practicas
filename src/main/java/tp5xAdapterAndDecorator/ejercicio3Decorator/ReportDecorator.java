@@ -11,7 +11,7 @@ public abstract class ReportDecorator implements Report{
 
     @Override
     public void export(File file) {
-        // Exportar el reporte a un archivo.
+        report.export(file);
     }
 
     @Override
