@@ -20,7 +20,7 @@ public class ConcursoAlmacenamiento implements ConcursoDAO {
         try {
             // Crear archivo temporal
             File archivoTemporal = File.createTempFile("concursos", ".txt");
-            archivoTemporal.deleteOnExit(); // Se borra al cerrar la app
+//            archivoTemporal.deleteOnExit(); // Se borra al cerrar la app
             ARCHIVO_CONCURSOS = archivoTemporal.getAbsolutePath();
 
 

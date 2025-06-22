@@ -16,8 +16,8 @@ public class InscripcionAlmacenamientoMySQL implements InscripcionDAO {
     @Override
     public void guardarInscripcion(Persona persona) throws InscripcionException {
         String sql = """
-            INSERT INTO inscripcion (nombre, apellido, dni, telefono, email, id_concurso)
-            VALUES (?, ?, ?, ?, ?, (SELECT id FROM concurso WHERE nombre = ?))
+            INSERT INTO inscripciones (nombre, apellido, dni, telefono, email, id_concurso)
+            VALUES (?, ?, ?, ?, ?, (SELECT id FROM concursos WHERE nombre = ?))
             """;
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {

@@ -17,6 +17,7 @@ public class Main {
             @Override
             public void run() {
                 try {
+                    // cambiar llamado de metodo según se quiera usar Local o bd
                     new Main().startAlmacenamientoBD();
                 } catch (Exception e) {
                     throw new RuntimeException(e);

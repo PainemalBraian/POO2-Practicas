@@ -14,7 +14,7 @@ public class InscripcionAlmacenamiento implements InscripcionDAO {
     static {
         try {
             File archivoTemporal = File.createTempFile("inscriptos", ".txt");
-            archivoTemporal.deleteOnExit(); // Para que se borre al cerrar la app
+//            archivoTemporal.deleteOnExit(); // Para que se borre al cerrar la app
             ARCHIVO_INSCRIPTOS = archivoTemporal.getAbsolutePath();
             System.out.println("Path inscripcion TMP: "+ARCHIVO_INSCRIPTOS); //Dirección del archivo temporal
 
